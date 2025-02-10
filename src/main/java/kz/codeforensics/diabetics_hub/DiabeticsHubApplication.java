@@ -1,0 +1,13 @@
+package kz.codeforensics.diabetics_hub;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DiabeticsHubApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DiabeticsHubApplication.class, args);
+	}
+
+}

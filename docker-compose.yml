@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: mchd-db
+    image: postgres:14
+    environment:
+      POSTGRES_DB: "diabetics_db"
+      POSTGRES_USER: "diabetics_db"
+      POSTGRES_PASSWORD: "diabetics_db"
+    ports:
+      - "5432:5432"
