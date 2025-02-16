@@ -2,6 +2,7 @@ package kz.codeforensics.diabetics_hub.domain.entity;
 
 import jakarta.persistence.*;
 import kz.codeforensics.diabetics_hub.domain.enums.*;
+import kz.codeforensics.diabetics_hub.security.models.User;
 import lombok.*;
 
 @Getter

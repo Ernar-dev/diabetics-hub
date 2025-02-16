@@ -18,4 +18,6 @@ public interface PatientHistoryService {
     PatientHistoryDto getRegistrationNumber(Long registrationNumber);
 
     Void deleteRegistrationNumber(Long registrationNumber);
+
+    PatientHistoryDto getUserId();
 }

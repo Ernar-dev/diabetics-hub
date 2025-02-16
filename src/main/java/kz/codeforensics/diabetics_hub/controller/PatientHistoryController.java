@@ -48,6 +48,11 @@ public class PatientHistoryController {
         return ResponseEntity.ok().body(patientHistoryService.getRegistrationNumber(registrationNumber));
     }
 
+    @GetMapping("/get")
+    public ResponseEntity<PatientHistoryDto> getUserId(){
+        return ResponseEntity.ok().body(patientHistoryService.getUserId());
+    }
+
     @PostMapping("/update")
     public ResponseEntity<PatientHistoryDto> update(@RequestBody PatientHistoryDto patientHistoryDto){
         return ResponseEntity.ok().body(patientHistoryService.update(patientHistoryDto));

@@ -4,6 +4,9 @@ import kz.codeforensics.diabetics_hub.domain.dto.PatientHistoryDto;
 import kz.codeforensics.diabetics_hub.domain.entity.PatientHistory;
 import kz.codeforensics.diabetics_hub.domain.repository.PatientHistoryRepository;
 import kz.codeforensics.diabetics_hub.mapper.PatientHistoryMapper;
+import kz.codeforensics.diabetics_hub.security.models.User;
+import kz.codeforensics.diabetics_hub.security.repository.UserRepository;
+import kz.codeforensics.diabetics_hub.security.services.UserService;
 import kz.codeforensics.diabetics_hub.service.PatientHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,11 +18,15 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
 
     private final PatientHistoryRepository patientHistoryRepository;
     private final PatientHistoryMapper patientHistoryMapper;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PatientHistoryServiceImpl(PatientHistoryRepository patientHistoryRepository, PatientHistoryMapper patientHistoryMapper) {
+    public PatientHistoryServiceImpl(PatientHistoryRepository patientHistoryRepository, PatientHistoryMapper patientHistoryMapper, UserService userService, UserRepository userRepository) {
         this.patientHistoryRepository = patientHistoryRepository;
         this.patientHistoryMapper = patientHistoryMapper;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
 
@@ -42,7 +49,7 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
         if (patientHistoryDto == null){
             throw new RuntimeException("PatientHistory is null");
         }
-        PatientHistory entity = patientHistoryRepository.getByRegistrationNumber(patientHistoryDto.getRegistrationNumber());
+        PatientHistory entity = patientHistoryRepository.findByRegistrationNumber(patientHistoryDto.getRegistrationNumber());
         entity.setAge(patientHistoryDto.getAge());
         entity.setGender(patientHistoryDto.getGender());
         entity.setHeartProblems(patientHistoryDto.getHeartProblems());
@@ -69,12 +76,21 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
 
     @Override
     public PatientHistoryDto getRegistrationNumber(Long registrationNumber) {
-        return patientHistoryMapper.mapToDto(patientHistoryRepository.getByRegistrationNumber(registrationNumber));
+        return patientHistoryMapper.mapToDto(patientHistoryRepository.findByRegistrationNumber(registrationNumber));
     }
 
     @Override
     public Void deleteRegistrationNumber(Long registrationNumber) {
         return patientHistoryRepository.deleteByRegistrationNumber(registrationNumber);
+    }
+
+    @Override
+    public PatientHistoryDto getUserId() {
+        User user = userService.getCurrentUserLogin()
+                .flatMap(userRepository::findByUsername)
+                .orElseThrow(() -> new RuntimeException("User could not be found"));
+        var result = patientHistoryRepository.findByUser(user);
+        return patientHistoryMapper.mapToDto(result);
     }
 
 
