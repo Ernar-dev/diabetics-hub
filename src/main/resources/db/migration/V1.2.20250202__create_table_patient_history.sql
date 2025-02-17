@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS patient_history (
-                                                id BIGINT PRIMARY KEY,
+                                                id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                                                 user_id BIGINT,
                                                 age BIGINT,
                                                 gender VARCHAR(50) NOT NULL,

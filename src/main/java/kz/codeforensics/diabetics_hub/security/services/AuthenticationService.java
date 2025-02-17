@@ -1,6 +1,7 @@
 package kz.codeforensics.diabetics_hub.security.services;
 
 
+import kz.codeforensics.diabetics_hub.security.mapper.ApplcationMapper;
 import kz.codeforensics.diabetics_hub.security.models.Role;
 import kz.codeforensics.diabetics_hub.security.models.User;
 import kz.codeforensics.diabetics_hub.security.repository.RoleRepository;
@@ -30,6 +31,7 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
     private TokenService tokenService;
     private UserService userService;
+    private ApplcationMapper userMapper;
 
     @Autowired
     public AuthenticationService(UserRepository userRepository,
@@ -37,28 +39,29 @@ public class AuthenticationService {
                                  PasswordEncoder passwordEncoder,
                                  AuthenticationManager authenticationManager,
                                  TokenService tokenService,
-                                 UserService userService) {
+                                 UserService userService, ApplcationMapper userMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     public AuthenticationResponse registerUser(RegistrationDto body){
         Role userRole = roleRepository.findByName(body.getRole()).get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);
-        User user = userService.save(new User(body.getUsername(), body.getFirstName(), body.getLastName(), body.getEmail(), passwordEncoder.encode(body.getPassword()), authorities));
+        User user = userService.save(userMapper.mapToEntityRegistrationDto(body, authorities));
         var token = checkToken(body.getUsername(), body.getPassword());
-        return new AuthenticationResponse(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), authorities, token);
+        return new AuthenticationResponse(user.getUsername(), user.getFirstName(), user.getLastName(), user.getIin(), user.getEmail(), user.getRoles(), token);
     }
 
     public AuthenticationResponse loginUser(LoginResponseDto body) {
         var token = checkToken(body.getUsername(), body.getPassword());
         var user = userRepository.findByUsername(body.getUsername()).get();
-        return new AuthenticationResponse(user.getUsername(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRoles(), token);
+        return new AuthenticationResponse(user.getUsername(), user.getFirstName(), user.getLastName(), user.getIin(), user.getEmail(), user.getRoles(), token);
     }
 
     private String checkToken(String username, String password) {

@@ -10,4 +10,4 @@ CREATE TABLE IF NOT EXISTS user_roles (
                                           FOREIGN KEY (role_id) REFERENCES roles (id)
 );
 
-INSERT INTO roles(name) VALUES ('ROLE_ADMIN'), ('ROLE_PATIENT'), ('ROLE_DOCTOR'), ('ROLE_SCIENTIST');
+INSERT INTO roles(name) VALUES ('ADMIN'), ('PATIENT'), ('DOCTOR'), ('SCIENTIST');

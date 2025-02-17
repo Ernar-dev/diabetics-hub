@@ -16,6 +16,8 @@ public class PatientHistoryDto {
 
     private Long age;
 
+    private String iin;
+
     private GenderEnum gender;
 
     private Boolean heartProblems;

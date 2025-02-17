@@ -32,14 +32,14 @@ public class PatientHistoryController {
 
     @GetMapping("/get-all")
     public ResponseEntity<Page<PatientHistoryDto>> getAll(@RequestParam(defaultValue = "0") int page,
-                                                         @RequestParam(defaultValue = "10") int size,
-                                                         @RequestParam(defaultValue = "registrationDate") String sortBy,
-                                                         @RequestParam(defaultValue = "DESC") String sortDirection){
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+                                                         @RequestParam(defaultValue = "10") int size)
+                                                         {
+        Pageable pageable = PageRequest.of(page, size);
         var response = patientHistoryService.getAll(pageable).map(patientHistoryMapper::mapToDto);
         return ResponseEntity.ok().body(response);
     }
-
+//, Sort.by(Sort.Direction.fromString(sortDirection), sortBy)@RequestParam(defaultValue = "registrationDate") String sortBy,
+//                                                         @RequestParam(defaultValue = "DESC") String sortDirection)
     @GetMapping("/get/{registrationNumber}")
     public ResponseEntity<PatientHistoryDto> getRegistrationNumber(@PathVariable Long registrationNumber){
         if (registrationNumber == null){

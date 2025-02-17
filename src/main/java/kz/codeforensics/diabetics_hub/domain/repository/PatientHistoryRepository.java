@@ -8,7 +8,7 @@ public interface PatientHistoryRepository extends JpaRepository<PatientHistory, 
 
     PatientHistory findByRegistrationNumber(Long registrationNumber);
 
-    Void deleteByRegistrationNumber(Long registrationNumber);
+    Integer deleteByRegistrationNumber(Long registrationNumber);
 
     PatientHistory findByUser(User user);
 

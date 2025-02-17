@@ -15,6 +15,7 @@ public class RegistrationDto {
     private String username;
     private String firstName;
     private String lastName;
+    private String iin;
     private String email;
     private String password;
     private RoleEnum role;
@@ -25,6 +26,7 @@ public class RegistrationDto {
                 "username='" + username + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", iin='" + iin + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password;
     }

@@ -55,8 +55,17 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/auth/**").permitAll();
+                    auth.requestMatchers("/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html").permitAll();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "PATIENT", "DOCTOR", "SCIENTIST");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/create").hasRole("DOCTOR");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/update").hasRole("DOCTOR");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/delete/").hasRole("DOCTOR");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/get-all").hasAnyRole("DOCTOR", "SCIENTIST");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/get/").hasAnyRole("DOCTOR", "SCIENTIST");
+                    auth.requestMatchers("/api/v1/diabetics/patient-history/get").hasRole("PATIENT");
                     auth.anyRequest().authenticated();
                 });
 

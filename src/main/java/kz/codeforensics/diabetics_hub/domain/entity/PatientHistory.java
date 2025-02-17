@@ -14,7 +14,7 @@ import lombok.*;
 public class PatientHistory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "registration_number", unique = true, nullable = false)
@@ -26,6 +26,9 @@ public class PatientHistory {
 
     @Column(name = "age")
     private Long age;
+
+    @Column(name = "iin")
+    private String iin;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")

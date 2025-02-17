@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PatientHistoryServiceImpl implements PatientHistoryService {
@@ -33,6 +34,8 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
     @Override
     public PatientHistoryDto create(PatientHistoryDto patientHistoryDto) {
         var entity = patientHistoryMapper.mapToEntity(patientHistoryDto);
+        User user = userRepository.findByIin(patientHistoryDto.getIin()).get();
+        entity.setUser(user);
         patientHistoryRepository.save(entity);
         return patientHistoryMapper.mapToDto(entity);
     }
@@ -79,9 +82,11 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
         return patientHistoryMapper.mapToDto(patientHistoryRepository.findByRegistrationNumber(registrationNumber));
     }
 
+    @Transactional
     @Override
     public Void deleteRegistrationNumber(Long registrationNumber) {
-        return patientHistoryRepository.deleteByRegistrationNumber(registrationNumber);
+        patientHistoryRepository.deleteByRegistrationNumber(registrationNumber);
+        return null;
     }
 
     @Override

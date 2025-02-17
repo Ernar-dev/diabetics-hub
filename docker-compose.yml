@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   postgres:
-    container_name: mchd-db
+    container_name: diabetics-db
     image: postgres:14
     environment:
       POSTGRES_DB: "diabetics_db"
