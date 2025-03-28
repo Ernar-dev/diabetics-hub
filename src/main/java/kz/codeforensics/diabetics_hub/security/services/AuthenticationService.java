@@ -77,4 +77,12 @@ public class AuthenticationService {
         }
     }
 
+    public User registerUserIsDoctor(RegistrationDto registrationDto) {
+        Role userRole = roleRepository.findByName(registrationDto.getRole()).get();
+        Set<Role> authorities = new HashSet<>();
+        authorities.add(userRole);
+        User user = userService.save(userMapper.mapToEntityRegistrationDto(registrationDto, authorities));
+        return user;
+    }
+
 }

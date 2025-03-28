@@ -99,5 +99,18 @@ public class UserService implements UserDetailsService{
         userRepository.delete(appUser);
     }
 
+    @Transactional(readOnly = true)
+    public User getUserEntity() {
+        User user = getCurrentUserLogin()
+                .flatMap(userRepository::findByUsername)
+                .orElseThrow(() -> new RuntimeException("User could not be found"));
+        return user;
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserIin( String iin ) {
+        return userRepository.findByIin(iin).get();
+    }
+
 }
 
