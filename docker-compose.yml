@@ -1,10 +1,30 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: diabetics-db
     image: postgres:14
     environment:
-      POSTGRES_DB: "diabetics_db"
-      POSTGRES_USER: "diabetics_db"
-      POSTGRES_PASSWORD: "diabetics_db"
+      POSTGRES_DB: diabetics_db
+      POSTGRES_USER: diabetics_db
+      POSTGRES_PASSWORD: diabetics_db
     ports:
       - "5432:5432"
+
+  diabetics-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_APPLICATION_JSON: '{
+          "open-api.base-url": "http://diabetics-app:8080",
+          "open-api.description": "DOCKER"
+        }'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/diabetics_db
+      SPRING_DATASOURCE_USERNAME: diabetics_db
+      SPRING_DATASOURCE_PASSWORD: diabetics_db
+

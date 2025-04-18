@@ -1,5 +1,6 @@
 package kz.codeforensics.diabetics_hub.controller;
 
+import kz.codeforensics.diabetics_hub.api.MeasurementApi;
 import kz.codeforensics.diabetics_hub.domain.dto.GlucoseMonitoringDto;
 import kz.codeforensics.diabetics_hub.domain.dto.MeasurementDto;
 import kz.codeforensics.diabetics_hub.service.MeasurementService;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "api/v1/diabetics/measurement")
-public class MeasurementController {
+public class MeasurementController implements MeasurementApi {
 
     private final MeasurementService measurementService;
 

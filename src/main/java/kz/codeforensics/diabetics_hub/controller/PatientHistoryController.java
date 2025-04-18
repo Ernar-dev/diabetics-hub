@@ -1,5 +1,6 @@
 package kz.codeforensics.diabetics_hub.controller;
 
+import kz.codeforensics.diabetics_hub.api.PatientHistoryApi;
 import kz.codeforensics.diabetics_hub.domain.dto.PatientHistoryDto;
 import kz.codeforensics.diabetics_hub.mapper.PatientHistoryMapper;
 import kz.codeforensics.diabetics_hub.service.PatientHistoryService;
@@ -7,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "api/v1/diabetics/patient-history")
-public class PatientHistoryController {
+public class PatientHistoryController implements PatientHistoryApi {
 
     private final PatientHistoryService patientHistoryService;
     private final PatientHistoryMapper patientHistoryMapper;

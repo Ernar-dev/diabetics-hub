@@ -30,7 +30,7 @@ public class LaboratoryTests {
     private Float hbA1c;
 
     /** Липидный профиль */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lipid_profile_id")
     private LipidProfile lipidProfileId;
 

@@ -1,5 +1,6 @@
 package kz.codeforensics.diabetics_hub.controller;
 
+import kz.codeforensics.diabetics_hub.api.PatientApi;
 import kz.codeforensics.diabetics_hub.domain.dto.PatientDto;
 import kz.codeforensics.diabetics_hub.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "api/v1/diabetics/patient")
-public class PatientController {
+public class PatientController implements PatientApi {
 
     private final PatientService patientService;
 

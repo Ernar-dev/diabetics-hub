@@ -44,22 +44,22 @@ public class MedicalHistoryAndComplaints {
     private String allergies;
 
     /** Физикальный осмотр */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "physical_examination_id")
     private PhysicalExamination physicalExaminationId;
 
     /** Лабораторные исследования */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "laboratory_tests_id")
     private LaboratoryTests laboratoryTestsId;
 
     /** Лечение и рекомендации */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "prescription_id")
     private Prescription prescriptionId;
 
     /** Планирование следующего визита */
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "next_visit_planning_id")
     private NextVisitPlanning nextVisitPlanningId;
 

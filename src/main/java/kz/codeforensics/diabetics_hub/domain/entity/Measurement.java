@@ -1,12 +1,10 @@
 package kz.codeforensics.diabetics_hub.domain.entity;
 
 import jakarta.persistence.*;
-import kz.codeforensics.diabetics_hub.security.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 
