@@ -11,6 +11,8 @@ import kz.codeforensics.diabetics_hub.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -45,6 +47,29 @@ public class PatientServiceImpl implements PatientService {
 
     public Patient getCurrentPatient() {
         return patientRepository.findByUser(userService.getUserEntity());
+    }
+
+    @Override
+    public PatientDto updatePatient(Long id, PatientDto patientDto) {
+        Optional<Patient> optionalPatient = patientRepository.findById(id);
+        if (optionalPatient.isPresent()) {
+            Patient existingPatient = optionalPatient.get();
+            existingPatient.setFirstName(patientDto.getFirstName());
+            existingPatient.setMiddleName(patientDto.getMiddleName());
+            existingPatient.setLastName(patientDto.getLastName());
+            existingPatient.setBirthDate(patientDto.getBirthDate());
+            existingPatient.setGender(patientDto.getGender());
+            existingPatient.setContactNumber(patientDto.getContactNumber());
+            existingPatient.setCreateDate(patientDto.getCreateDate());
+            existingPatient.setDiabetesType(patientDto.getDiabetesType());
+            return patientMapper.mapToDto(patientRepository.save(existingPatient));
+        }
+        return null;
+    }
+
+    @Override
+    public void deletePatient(Long id) {
+        patientRepository.deleteById(id);
     }
 
 }

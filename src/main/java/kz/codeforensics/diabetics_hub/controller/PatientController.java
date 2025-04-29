@@ -19,13 +19,24 @@ public class PatientController implements PatientApi {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PatientDto> create(@RequestBody PatientDto patientDto){
+    public ResponseEntity<PatientDto> create(@RequestBody PatientDto patientDto) {
         return ResponseEntity.ok().body(patientService.create(patientDto));
     }
 
     @GetMapping("/get")
     public ResponseEntity<PatientDto> get(){
         return ResponseEntity.ok().body(patientService.get());
+    }
+
+    @PutMapping("update/{id}")
+    public ResponseEntity<PatientDto> updatePatient(@PathVariable Long id, @RequestBody PatientDto patientDto) {
+        return ResponseEntity.ok().body(patientService.updatePatient(id, patientDto));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.ok().build();
     }
 
 }
