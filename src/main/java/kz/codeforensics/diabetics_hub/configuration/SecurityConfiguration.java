@@ -55,7 +55,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // замените на ваш фронтенд
+        configuration.addAllowedOrigin("*"); // замените на ваш фронтенд
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true); // если нужны cookie, auth headers и т.д.
