@@ -4,6 +4,7 @@ import kz.codeforensics.diabetics_hub.domain.dto.PatientDto;
 import kz.codeforensics.diabetics_hub.domain.entity.Patient;
 import kz.codeforensics.diabetics_hub.domain.repository.PatientRepository;
 import kz.codeforensics.diabetics_hub.mapper.PatientMapper;
+import kz.codeforensics.diabetics_hub.security.models.User;
 import kz.codeforensics.diabetics_hub.security.services.AuthenticationService;
 import kz.codeforensics.diabetics_hub.security.services.UserService;
 import kz.codeforensics.diabetics_hub.service.DoctorProfileService;
@@ -42,16 +43,16 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDto get() {
-        return patientMapper.mapToDto(patientRepository.findByUser(userService.getUserEntity()));
+        return patientMapper.mapToDto(patientRepository.findByUser(userService.getUserEntity()).get());
     }
 
     public Patient getCurrentPatient() {
-        return patientRepository.findByUser(userService.getUserEntity());
+        return patientRepository.findByUser(userService.getUserEntity()).get();
     }
 
     @Override
-    public PatientDto updatePatient(Long id, PatientDto patientDto) {
-        Optional<Patient> optionalPatient = patientRepository.findById(id);
+    public PatientDto updatePatient(String iin, PatientDto patientDto) {
+        Optional<Patient> optionalPatient = patientRepository.findByUser(userService.getUserIin(iin));
         if (optionalPatient.isPresent()) {
             Patient existingPatient = optionalPatient.get();
             existingPatient.setFirstName(patientDto.getFirstName());
@@ -68,8 +69,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void deletePatient(Long id) {
-        patientRepository.deleteById(id);
+    public void deletePatient(String iin) {
+        User user = userService.getUserIin(iin);
+        patientRepository.deleteByUser(user);
     }
 
 }

@@ -6,7 +6,10 @@ import kz.codeforensics.diabetics_hub.security.models.User;
 import kz.codeforensics.diabetics_hub.security.models.dto.AuthenticationResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PatientRepository extends JpaRepository<Patient, Long> {
-    Patient findByUser(User user);
+import java.util.Optional;
 
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+    Optional<Patient> findByUser(User user);
+
+    void deleteByUser(User user);
 }

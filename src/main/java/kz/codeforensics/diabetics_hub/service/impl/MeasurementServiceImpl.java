@@ -42,7 +42,7 @@ public class MeasurementServiceImpl implements MeasurementService {
         var entity = measurementMapper.mapToEntity(measurementDto);
         User user = userService.getUserEntity();
 //        System.out.println(user);
-        Patient patient = patientRepository.findByUser(user);
+        Patient patient = patientRepository.findByUser(user).get();
         entity.setPatient(patient);
         entity.setCreateDate(LocalDate.now());
         return measurementMapper.mapToDto(measurementRepository.save(entity));
@@ -59,7 +59,7 @@ public class MeasurementServiceImpl implements MeasurementService {
     }
 
     private Page<Measurement> getMeasurement(Pageable pageable, String iin) {
-        var patient = patientRepository.findByUser(userService.getUserIin(iin));
+        var patient = patientRepository.findByUser(userService.getUserIin(iin)).get();
         List<Measurement> allMeasurements = measurementRepository.findAllByPatient(patient);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allMeasurements.size());
