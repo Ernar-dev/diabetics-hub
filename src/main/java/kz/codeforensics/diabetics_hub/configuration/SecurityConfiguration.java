@@ -58,7 +58,7 @@ public class SecurityConfiguration {
         configuration.addAllowedOrigin("*"); // замените на ваш фронтенд
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true); // если нужны cookie, auth headers и т.д.
+        configuration.setAllowCredentials(false); // если нужны cookie, auth headers и т.д.
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
