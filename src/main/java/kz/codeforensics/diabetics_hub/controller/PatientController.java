@@ -28,9 +28,10 @@ public class PatientController implements PatientApi {
         return ResponseEntity.ok().body(patientService.get());
     }
 
-//    public ResponseEntity<PatientDto> getIin() {
-//        return ResponseEntity.ok().body(patientService.getIin());
-//    }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<PatientDto> getIin(@PathVariable Long id) {
+        return ResponseEntity.ok().body(patientService.get(id));
+    }
 
     @PutMapping("update/{iin}")
     public ResponseEntity<PatientDto> updatePatient(@PathVariable String iin, @RequestBody PatientDto patientDto) {

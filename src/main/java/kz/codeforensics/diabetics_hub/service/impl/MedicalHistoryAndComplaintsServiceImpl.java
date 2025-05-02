@@ -72,4 +72,9 @@ public class MedicalHistoryAndComplaintsServiceImpl implements MedicalHistoryAnd
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public MedicalHistoryAndComplaintsDto getId(Long id) {
+        return mapper.mapToDto(repository.findById(id).get());
+    }
 }

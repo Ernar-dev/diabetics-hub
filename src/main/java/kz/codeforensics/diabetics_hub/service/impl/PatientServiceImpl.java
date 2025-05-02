@@ -74,4 +74,9 @@ public class PatientServiceImpl implements PatientService {
         patientRepository.deleteByUser(user);
     }
 
+    @Override
+    public PatientDto get(Long id) {
+        return patientMapper.mapToDto(patientRepository.findById(id).get());
+    }
+
 }

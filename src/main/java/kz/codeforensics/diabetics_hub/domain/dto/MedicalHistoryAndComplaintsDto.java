@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Setter
 public class MedicalHistoryAndComplaintsDto {
 
+    private Long id;
+
     private LocalDate createdAt;
 
     /** Основные жалобы пациента */

@@ -16,6 +16,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PatientDto {
 
+    private Long id;
+
     private RegistrationDto user;
 
     private String firstName;

@@ -15,4 +15,5 @@ public interface PatientService {
 
     void deletePatient(String iin);
 
+    PatientDto get(Long id);
 }

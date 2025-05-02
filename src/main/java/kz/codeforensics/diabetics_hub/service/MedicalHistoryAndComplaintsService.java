@@ -14,4 +14,6 @@ public interface MedicalHistoryAndComplaintsService {
     MedicalHistoryAndComplaintsDto update(Long id, MedicalHistoryAndComplaintsDto dto);
 
     void delete(Long id);
+
+    MedicalHistoryAndComplaintsDto getId(Long id);
 }

@@ -31,6 +31,11 @@ public class MedicalHistoryAndComplaintsController implements MedicalHistoryAndC
         return ResponseEntity.ok().body(medicalHistoryAndComplaintsService.getMedicalHistoryAndComplaints());
     }
 
+    @GetMapping("/get/{id}")
+    public ResponseEntity<MedicalHistoryAndComplaintsDto> getId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(medicalHistoryAndComplaintsService.getId(id));
+    }
+
     @GetMapping("/get-all")
     public ResponseEntity<Page<MedicalHistoryAndComplaintsDto>> getAllMedicalHistoryAndComplaints(
             @RequestParam(defaultValue = "0") int page,
