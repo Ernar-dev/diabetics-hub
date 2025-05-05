@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ответ принят</title>
+</head>
+<body style="font-family: Arial; text-align: center; padding: 40px;">
+<h2>Спасибо за ваш ответ! 🙏</h2>
+<p>Вы выбрали: <strong th:text="${answer == 'yes' ? '✅ Да' : '❌ Нет'}"></strong></p>
+</body>
+</html>

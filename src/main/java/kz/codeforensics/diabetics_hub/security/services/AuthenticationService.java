@@ -49,7 +49,10 @@ public class AuthenticationService {
         this.userMapper = userMapper;
     }
 
-    public AuthenticationResponse registerUser(RegistrationDto body){
+    public AuthenticationResponse registerUser(RegistrationDto body) {
+        if (userRepository.findByUsername(body.getUsername()).isPresent()) {
+            throw new RuntimeException("Пользователь с таким именем уже существует: " + body.getUsername());
+        }
         Role userRole = roleRepository.findByName(body.getRole()).get();
         Set<Role> authorities = new HashSet<>();
         authorities.add(userRole);

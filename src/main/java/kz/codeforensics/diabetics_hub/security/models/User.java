@@ -53,7 +53,7 @@ public class User implements UserDetails {
         this.roles = authorities;
     }
 
-    public User(String username, String firstName, String lastName, String email, String password, Set<Role> roles) {
+    public User(String username, String firstName, String lastName, String iin, String email, String password, Set<Role> roles) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

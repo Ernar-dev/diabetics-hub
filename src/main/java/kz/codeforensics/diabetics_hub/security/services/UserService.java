@@ -18,6 +18,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -110,6 +111,14 @@ public class UserService implements UserDetailsService{
     @Transactional(readOnly = true)
     public User getUserIin( String iin ) {
         return userRepository.findByIin(iin).get();
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
 }
