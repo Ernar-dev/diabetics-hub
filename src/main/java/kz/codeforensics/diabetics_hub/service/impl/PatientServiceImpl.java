@@ -35,6 +35,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientDto create(PatientDto patientDto) {
+        if (userService.getUsername(patientDto.getUser().getUsername()).isPresent()
+                || userService.getIin(patientDto.getUser().getIin()).isPresent()) {
+            throw new RuntimeException("Такой название пользователь уже сушествует " + patientDto.getUser().getUsername()
+                    + " или такой иин уже сушествует " + patientDto.getUser().getIin());
+        }
         var patient = patientMapper.mapToEntity(patientDto);
         patient.setUser(authenticationService.registerUserIsDoctor(patientDto.getUser()));
         patient.setDoctor(userService.getUserEntity());
@@ -48,6 +53,10 @@ public class PatientServiceImpl implements PatientService {
 
     public Patient getCurrentPatient() {
         return patientRepository.findByUser(userService.getUserEntity()).get();
+    }
+
+    public Patient getPatientUser(User user) {
+        return patientRepository.findByUser(user).get();
     }
 
     @Override

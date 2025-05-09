@@ -5,6 +5,7 @@ import kz.codeforensics.diabetics_hub.domain.entity.MedicalHistoryAndComplaints;
 import kz.codeforensics.diabetics_hub.domain.entity.Patient;
 import kz.codeforensics.diabetics_hub.domain.repository.MedicalHistoryAndComplaintsRepository;
 import kz.codeforensics.diabetics_hub.mapper.MedicalHistoryAndComplaintsMapper;
+import kz.codeforensics.diabetics_hub.security.services.UserService;
 import kz.codeforensics.diabetics_hub.service.MedicalHistoryAndComplaintsService;
 import kz.codeforensics.diabetics_hub.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
@@ -20,18 +22,24 @@ public class MedicalHistoryAndComplaintsServiceImpl implements MedicalHistoryAnd
     private final MedicalHistoryAndComplaintsRepository repository;
     private final MedicalHistoryAndComplaintsMapper mapper;
     private final PatientService patientService;
+    private final UserService userService;
 
     @Autowired
-    public MedicalHistoryAndComplaintsServiceImpl(MedicalHistoryAndComplaintsRepository repository, MedicalHistoryAndComplaintsMapper mapper, PatientService patientService) {
+    public MedicalHistoryAndComplaintsServiceImpl(MedicalHistoryAndComplaintsRepository repository,
+                                                  MedicalHistoryAndComplaintsMapper mapper,
+                                                  PatientService patientService,
+                                                  UserService userService) {
         this.repository = repository;
         this.mapper = mapper;
         this.patientService = patientService;
+        this.userService = userService;
     }
 
     @Override
     public MedicalHistoryAndComplaintsDto create(MedicalHistoryAndComplaintsDto dto) {
         var entity = mapper.mapToEntity(dto);
-        entity.setPatientId(patientService.getCurrentPatient());
+        entity.setPatientId(patientService.getPatientUser(userService.getUserIin(dto.getIin())));
+        entity.setCreatedAt(LocalDate.now());
         MedicalHistoryAndComplaintsDto resultDto = mapper.mapToDto(repository.save(entity));
         return resultDto;
     }

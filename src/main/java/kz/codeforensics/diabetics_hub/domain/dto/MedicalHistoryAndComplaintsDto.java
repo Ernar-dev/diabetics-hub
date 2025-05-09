@@ -11,7 +11,7 @@ public class MedicalHistoryAndComplaintsDto {
 
     private Long id;
 
-    private LocalDate createdAt;
+    private String iin;
 
     /** Основные жалобы пациента */
     private String mainComplaints;

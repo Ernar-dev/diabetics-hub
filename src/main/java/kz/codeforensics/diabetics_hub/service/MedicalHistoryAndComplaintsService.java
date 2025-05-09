@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface MedicalHistoryAndComplaintsService {
+
     MedicalHistoryAndComplaintsDto create(MedicalHistoryAndComplaintsDto dto);
 
     MedicalHistoryAndComplaintsDto getMedicalHistoryAndComplaints();

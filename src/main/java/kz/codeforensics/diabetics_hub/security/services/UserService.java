@@ -121,5 +121,13 @@ public class UserService implements UserDetailsService{
         return userRepository.findAll();
     }
 
+    public Optional<User> getUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<User> getIin(String iin) {
+        return userRepository.findByIin(iin);
+    }
+
 }
 
