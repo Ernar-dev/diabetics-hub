@@ -41,7 +41,6 @@ public class MeasurementServiceImpl implements MeasurementService {
     public MeasurementDto create(MeasurementDto measurementDto) {
         var entity = measurementMapper.mapToEntity(measurementDto);
         User user = userService.getUserEntity();
-//        System.out.println(user);
         Patient patient = patientRepository.findByUser(user).get();
         entity.setPatient(patient);
         entity.setCreateDate(LocalDate.now());
